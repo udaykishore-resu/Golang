@@ -13,48 +13,27 @@ const Projects = () => {
   }, []);
 
   const fetchProjects = async () => {
-    setIsLoading(true);
     try {
       const response = await api.get('/projects');
       setProjects(response.data);
       setIsLoading(false);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to fetch projects. Please try again later.');
+      setError('Failed to fetch projects. Please try again.');
       setIsLoading(false);
-      console.error('Error fetching projects:', err);
-      
-      // Handle unauthorized access
-      if (err.response && err.response.status === 401) {
-        // Redirect to login page or show login modal
-        console.log('User is not authenticated. Redirecting to login...');
-        // Implement your redirect logic here, e.g.:
-        // history.push('/login');
-      }
     }
   };
 
-  if (isLoading) {
-    return <div>Loading projects...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  if (isLoading) return <div>Loading projects...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div>
       <h2>Projects</h2>
-      {projects.length === 0 ? (
-        <p>No projects available.</p>
-      ) : (
-        <ul>
-          {projects.map((project) => (
-            <li key={project.project_id}>
-              {project.project_id} - {project.project_name}
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul>
+        {projects.map(project => (
+          <li key={project.project_id}>{project.project_id} - {project.project_name}</li>
+        ))}
+      </ul>
     </div>
   );
 };

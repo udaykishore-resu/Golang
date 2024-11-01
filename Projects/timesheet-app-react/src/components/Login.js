@@ -15,7 +15,8 @@ function Login() {
             if (response.data && response.data.token) {
               // After successful login
               localStorage.setItem('jwtToken', response.data.token);
-              // Redirect to projects page or dashboard
+              localStorage.setItem('refreshToken', response.data.refreshToken);
+              // Redirect to timesheet page or dashboard
               navigate('/timesheet');
             }
             
