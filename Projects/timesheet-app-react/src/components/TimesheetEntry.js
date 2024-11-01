@@ -43,7 +43,21 @@ function TimesheetEntry() {
     setIsLoading(true);
     try {
       const response = await api.get(`/subprojects?project_id=${projectId}`);
-      setSubprojects(response.data);
+      
+      // Check if response and response.data are valid
+      if (response && Array.isArray(response.data)) {
+        setSubprojects(response.data);
+        
+        // If no subprojects are found, set subprojectId to the projectId
+        if (response.data.length === 0) {
+          setFormData(prev => ({ ...prev, subprojectId: projectId }));
+          alert('No subprojects found for this project. You can submit using the project ID.');
+        }
+      } else {
+        console.error('Unexpected response format:', response);
+        setError('No subprojects found for this project.');
+      }
+      
     } catch (err) {
       setError('Failed to fetch subprojects. Please try again.');
       console.error('Error fetching subprojects:', err);
@@ -66,9 +80,11 @@ function TimesheetEntry() {
   };
 
   const handleHoursChange = (increment) => {
+    // Ensure HoursSpent does not exceed 10
+    const newHoursSpent = Math.max(0, Math.min(10, parseFloat(formData.hoursSpent || 0) + increment));
     setFormData(prev => ({
       ...prev,
-      hoursSpent: Math.max(0, parseFloat(prev.hoursSpent || 0) + increment)
+      hoursSpent: newHoursSpent
     }));
   };
 
@@ -78,13 +94,13 @@ function TimesheetEntry() {
 
     // Create a new object that matches the backend structure
     const timesheetData = {
-        ProjectID: parseInt(formData.projectId),      // e.g., 1
-        SubProjectID: parseInt(formData.subprojectId), // e.g., 1
-        JiraSnowID: formData.jiraId,                   // e.g., '123'
-        TaskDescription: formData.taskDescription,      // e.g., 'test'
-        HoursSpent: parseInt(formData.hoursSpent),     // e.g., 4
-        Comments: formData.comments                      // e.g., ''
-      };
+      ProjectID: parseInt(formData.projectId),
+      SubProjectID: parseInt(formData.subprojectId),
+      JiraSnowID: formData.jiraId,
+      TaskDescription: formData.taskDescription,
+      HoursSpent: parseInt(formData.hoursSpent),
+      Comments: formData.comments
+    };
 
     console.log('Submitting timesheet data:', timesheetData);
 
@@ -92,7 +108,7 @@ function TimesheetEntry() {
       const response = await api.post('/timesheet', timesheetData);
       console.log('Timesheet submitted successfully:', response.data);
       alert('Timesheet entry submitted successfully!');
-      
+
       // Reset form
       setFormData({
         projectId: '',
@@ -102,9 +118,11 @@ function TimesheetEntry() {
         hoursSpent: 0,
         comments: ''
       });
+      
     } catch (error) {
       console.error('Error submitting timesheet:', error.response?.data || error.message);
       alert('Failed to submit timesheet entry. Please try again.');
+      
     } finally {
       setIsLoading(false);
     }
@@ -147,11 +165,19 @@ function TimesheetEntry() {
               disabled={!formData.projectId}
             >
               <option value="">Select a subproject</option>
-              {subprojects.map(subproject => (
-                <option key={subproject.sub_project_id} value={subproject.sub_project_id}>
-                  {subproject.sub_project_id} - {subproject.sub_project_name}
-                </option>
-              ))}
+              {subprojects.length > 0 ? (
+                subprojects.map(subproject => (
+                  <option key={subproject.sub_project_id} value={subproject.sub_project_id}>
+                    {subproject.sub_project_id} - {subproject.sub_project_name}
+                  </option>
+                ))
+              ) : (
+                formData.projectId && (
+                  <option value={formData.projectId}>
+                    {formData.projectId} - No Subprojects Available
+                  </option>
+                )
+              )}
             </select>
           </div>
 
@@ -190,6 +216,7 @@ function TimesheetEntry() {
                 onChange={handleInputChange}
                 step="0.5"
                 min="0"
+                max="10" // Limit input to a maximum of 10 hours
                 required
               />
               <button type="button" onClick={() => handleHoursChange(0.5)}>+</button>
