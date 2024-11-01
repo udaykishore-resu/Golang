@@ -12,8 +12,13 @@ function Login() {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8080/login', { username, password });
-            localStorage.setItem('token', response.data.token);
-            navigate('/timesheet');
+            if (response.data && response.data.token) {
+              // After successful login
+              localStorage.setItem('jwtToken', response.data.token);
+              // Redirect to projects page or dashboard
+              navigate('/timesheet');
+            }
+            
         } catch (error) {
             console.error('Login failed:', error);
             alert('Login failed. Please check your credentials.');
