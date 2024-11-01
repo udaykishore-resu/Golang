@@ -1,19 +1,35 @@
+/* src/components/TimesheetEntry.module.css */
+
 .container {
-    max-width: 600px;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('/Users/anusharesu/Desktop/timesheet-template.png');
+    background-size: cover;
+    background-position: center;
     padding: 20px;
+  }
+  
+  .formWrapper {
+    background-color: rgba(249, 249, 249, 0.9);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
   }
   
   h2 {
     text-align: center;
     margin-bottom: 20px;
+    color: #333;
   }
   
   .form {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
   }
   
   .formGroup {
@@ -24,6 +40,7 @@
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: #555;
   }
   
   input[type="text"],
@@ -31,10 +48,11 @@
   select,
   textarea {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;
+    font-size: 16px;
   }
   
   textarea {
@@ -48,32 +66,54 @@
   }
   
   .hoursInput button {
-    padding: 5px 10px;
+    padding: 8px 12px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .hoursInput button:hover {
+    background-color: #0056b3;
   }
   
   .hoursInput input {
-    width: 60px;
+    width: 80px;
     text-align: center;
     margin: 0 10px;
+    font-size: 16px;
   }
   
   .submitButton {
     display: block;
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     background-color: #28a745;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
+    transition: background-color 0.3s;
   }
   
   .submitButton:hover {
     background-color: #218838;
+  }
+  
+  .loading, .error {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
   }
