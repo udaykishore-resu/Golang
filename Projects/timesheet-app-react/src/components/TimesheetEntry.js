@@ -15,7 +15,7 @@ function TimesheetEntry() {
   });
   const [projects, setProjects] = useState([]);
   const [subprojects, setSubprojects] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -29,6 +29,7 @@ function TimesheetEntry() {
       setProjects(response.data);
     } catch (err) {
       setError('Failed to fetch projects. Please try again.');
+      console.error('Error fetching projects:', err);
     } finally {
       setIsLoading(false);
     }
@@ -45,6 +46,7 @@ function TimesheetEntry() {
       setSubprojects(response.data);
     } catch (err) {
       setError('Failed to fetch subprojects. Please try again.');
+      console.error('Error fetching subprojects:', err);
     } finally {
       setIsLoading(false);
     }
@@ -72,9 +74,26 @@ function TimesheetEntry() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
+    // Create a new object that matches the backend structure
+    const timesheetData = {
+        ProjectID: parseInt(formData.projectId),      // e.g., 1
+        SubProjectID: parseInt(formData.subprojectId), // e.g., 1
+        JiraSnowID: formData.jiraId,                   // e.g., '123'
+        TaskDescription: formData.taskDescription,      // e.g., 'test'
+        HoursSpent: parseInt(formData.hoursSpent),     // e.g., 4
+        Comments: formData.comments                      // e.g., ''
+      };
+
+    console.log('Submitting timesheet data:', timesheetData);
+
     try {
-      await api.post('/timesheet', formData);
+      const response = await api.post('/timesheet', timesheetData);
+      console.log('Timesheet submitted successfully:', response.data);
       alert('Timesheet entry submitted successfully!');
+      
+      // Reset form
       setFormData({
         projectId: '',
         subprojectId: '',
@@ -84,7 +103,10 @@ function TimesheetEntry() {
         comments: ''
       });
     } catch (error) {
+      console.error('Error submitting timesheet:', error.response?.data || error.message);
       alert('Failed to submit timesheet entry. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -184,7 +206,9 @@ function TimesheetEntry() {
             />
           </div>
 
-          <button type="submit" className={styles.submitButton}>Submit Timesheet</button>
+          <button type="submit" className={styles.submitButton} disabled={isLoading}>
+            {isLoading ? 'Submitting...' : 'Submit Timesheet'}
+          </button>
         </form>
       </div>
     </div>
