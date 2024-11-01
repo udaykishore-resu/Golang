@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package main;
+
+option go_package = "/Users/anusharesu/Desktop/Nani_Bitbucket/Go/gRPC";
+service HelloService{
+    rpc SayHello (HelloRequest) returns (HelloResponse);
+}
+
+message HelloRequest{
+    string name = 1;
+}
+
+message HelloResponse{
+    string message = 1;
+}
