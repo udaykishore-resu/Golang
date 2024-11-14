@@ -1,36 +1,52 @@
 package services
 
 import (
+	"database/sql"
 	"timesheet-app/database"
 	"timesheet-app/models"
 )
 
 // GetSubprojects retrieves a list of subprojects for a given project ID from the database
-func GetSubprojects(projectID int) ([]models.SubProject, error) {
+// If no subprojects are found, it returns the project details instead
+func GetSubprojects(projectID int) (interface{}, error) {
 	db := database.GetDB() // Get the database connection
-	var subprojects []models.SubProject
 
 	// Query to fetch subprojects based on the provided project ID
-	query := "SELECT SubProjectID, SubProjectName, ProjectID FROM SubProjects WHERE ProjectID = ?"
-	rows, err := db.Query(query, projectID)
+	subprojectsQuery := "SELECT SubProjectID, SubProjectName, ProjectID FROM SubProjects WHERE ProjectID = ?"
+	rows, err := db.Query(subprojectsQuery, projectID)
 	if err != nil {
-		return nil, err // Return nil and the error if the query fails
+		return nil, err
 	}
-	defer rows.Close() // Ensure rows are closed after processing
+	defer rows.Close()
 
+	var subprojects []models.SubProject
 	for rows.Next() {
 		var subproject models.SubProject
-		// Scan the row into the subproject struct
 		if err := rows.Scan(&subproject.SubProjectID, &subproject.SubProjectName, &subproject.ProjectID); err != nil {
-			return nil, err // Return nil and the error if scanning fails
+			return nil, err
 		}
-		subprojects = append(subprojects, subproject) // Append the subproject to the slice
+		subprojects = append(subprojects, subproject)
 	}
 
-	// Check for any error encountered during iteration
 	if err := rows.Err(); err != nil {
-		return nil, err // Return nil and the error if there was an issue
+		return nil, err
 	}
 
-	return subprojects, nil // Return the list of subprojects and a nil error
+	// If subprojects are found, return them
+	if len(subprojects) > 0 {
+		return subprojects, nil
+	}
+
+	// If no subprojects are found, query for project details
+	projectQuery := "SELECT ProjectID, ProjectName FROM Projects WHERE ProjectID = ?"
+	var project models.Project
+	err = db.QueryRow(projectQuery, projectID).Scan(&project.ProjectId, &project.ProjectName)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil // No project found
+		}
+		return nil, err
+	}
+
+	return project, nil
 }
