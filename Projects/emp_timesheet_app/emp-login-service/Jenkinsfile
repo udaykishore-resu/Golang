@@ -15,15 +15,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                script {
-                    docker.image('golang:1.21.5').inside {
-                        sh 'go version'
-                        dir('emp-login-service') {
-                            sh 'go mod download'
-                            sh 'go build -o main ./cmd/main.go'
-                        }
-                    }
-                }
+                sh '''
+                    docker run --rm -v "$PWD":/app -w /app golang:1.21.5 /bin/bash -c "
+                    go version
+                    cd emp-login-service
+                    go mod download
+                    go build -o main ./cmd/main.go
+                '''
             }
         }
 
