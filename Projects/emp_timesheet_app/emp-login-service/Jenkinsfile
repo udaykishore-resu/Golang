@@ -1,0 +1,74 @@
+pipeline{
+    agent any
+
+    environment{
+        DOCKER_IMAGE = 'udaykishoreresu/emp-login-service'
+        DOCKER_CREDENTIALS = credentials('bd5fafc2-aa2b-4bed-bc95-ee64f7cbb057')
+    }
+
+    stages{
+        stage('Checkout'){
+            steps{
+                checkout scm
+            }
+        }
+
+        stage('Build'){
+            agent{
+                docker{
+                    image 'golang:1.21.5'
+                    reuseNode true
+                }
+            }
+
+            steps{
+                sh 'go version'
+                dir('emp-login-service'){
+                    sh 'go mod download'
+                    sh 'go build -o main ./cmd/main.go'
+                }
+            }
+        }
+
+        stage('Test'){
+            agent{
+                docker{
+                    image 'golang:1.21.5'
+                    reuseNode true
+                }
+            }
+
+            steps{
+                dir('emp-login-service'){
+                    sh 'go test ./... -v'
+                }
+            }
+        }
+
+        stage('Build Docker Image'){
+            steps{
+                dir('emp-login-service'){
+                    script{
+                        docker.build("${DOCKER_IMAGE}:{BUILD_NUMBER}")
+                    }
+                }
+            }
+        }
+
+        stage('Push to Docker Hub'){
+            steps{
+                script{
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS){
+                        docker.image("${DOCKER_IMAGE}:${BUILD_NUMBER}").push()
+                        docker.image("${DOCKER_IMAGE}:${BUILD_NUMBER}").push("latest")
+                    }
+                }
+            }
+        }
+    }
+    post{
+        always{
+            cleanWs()
+        }
+    }
+}

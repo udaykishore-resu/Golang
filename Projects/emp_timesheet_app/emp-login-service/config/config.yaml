@@ -1,0 +1,23 @@
+server:
+  port:"8080"
+
+database:
+  host: "localhost"
+  port: 3306
+  username: root
+  password: ""
+  schema: "test"
+
+jwt:
+  secret: "your_secret_key"
+  expiration_hours: 72
+
+logging:
+  level: "info"
+
+security:
+  allowed_users: 
+    - "john_doe"
+    - "jane_smith"
+    - "super_admin"
+    - "alice_jones" 
