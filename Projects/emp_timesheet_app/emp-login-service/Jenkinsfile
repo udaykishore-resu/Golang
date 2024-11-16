@@ -18,6 +18,7 @@ pipeline {
                 sh """
                         /usr/local/bin/docker run --rm -v "\${WORKSPACE}":/app -w /app golang:1.21.5 /bin/bash -c '
                         go version
+                        pwd
                         cd emp-login-service
                         go mod download
                         go build -o main ./cmd/main.go
