@@ -21,6 +21,7 @@ pipeline {
                     cd emp-login-service
                     go mod download
                     go build -o main ./cmd/main.go
+                "
                 '''
             }
         }
