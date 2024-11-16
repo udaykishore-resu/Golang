@@ -15,14 +15,14 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh '''
-                    docker run --rm -v "$PWD":/app -w /app golang:1.21.5 /bin/bash -c "
-                    go version
-                    cd emp-login-service
-                    go mod download
-                    go build -o main ./cmd/main.go
-                "
-                '''
+                sh """
+                        /usr/local/bin/docker run --rm -v "\${WORKSPACE}":/app -w /app golang:1.21.5 /bin/bash -c '
+                        go version
+                        cd emp-login-service
+                        go mod download
+                        go build -o main ./cmd/main.go
+                    '
+                """
             }
         }
 
