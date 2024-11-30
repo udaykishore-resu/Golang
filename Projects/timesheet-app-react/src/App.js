@@ -1,22 +1,20 @@
-// src/App.js
-
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Welcome from './components/Welcome';
 import Login from './components/Login';
-import Projects from './components/Projects';
 import TimesheetEntry from './components/TimesheetEntry';
+import ThankYou from './components/ThankYou';
 
 function App() {
   return (
     <Router>
-      <div>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/timesheet" element={<TimesheetEntry />} />
-          {/* Add other routes as needed */}
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/timesheet" element={<TimesheetEntry />} />
+        <Route path="/thank-you" element={<ThankYou />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </Router>
   );
 }

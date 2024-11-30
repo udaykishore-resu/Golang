@@ -13,19 +13,16 @@ function Login() {
         try {
             const response = await axios.post('http://localhost:8080/login', { username, password });
             if (response.data && response.data.token) {
-              // After successful login
-              localStorage.setItem('jwtToken', response.data.token);
-              localStorage.setItem('refreshToken', response.data.refreshToken);
-              // Redirect to timesheet page or dashboard
-              navigate('/timesheet');
+                localStorage.setItem('jwtToken', response.data.token);
+                localStorage.setItem('refreshToken', response.data.refreshToken);
+                navigate('/timesheet');
             }
-            
         } catch (error) {
             console.error('Login failed:', error);
             alert('Login failed. Please check your credentials.');
         }
     };
-
+    
     return (
         <div className={styles.container}>
             <form className={styles.form} onSubmit={handleSubmit}>
