@@ -3,13 +3,12 @@ package services
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"timesheet-app/utils"
 )
 
 // Authenticate checks the username and password against the database and returns a JWT token if valid.
 func Authenticate(db *sql.DB, username, password string) (string, error) {
-	fmt.Println("Authenticate::: Entry")
+
 	// Query the database to validate user credentials
 	var storedPassword string
 	query := "SELECT password FROM Employee WHERE username = ?"

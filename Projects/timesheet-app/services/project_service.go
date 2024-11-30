@@ -1,21 +1,19 @@
 package services
 
 import (
-	"fmt"
 	"timesheet-app/database"
 	"timesheet-app/models"
 )
 
 // GetProjects retrieves a list of projects from the database
 func GetProjects() ([]models.Project, error) {
-	fmt.Println("GetProjects:::Entry")
 	db := database.GetDB() // Get the database connection
 	var projects []models.Project
 
 	// Query to fetch projects from the database
 	query := "SELECT ProjectID, ProjectName FROM Projects"
 	rows, err := db.Query(query)
-	fmt.Println("GetProjects:::rows::", rows)
+
 	if err != nil {
 		return nil, err // Return nil and the error if the query fails
 	}

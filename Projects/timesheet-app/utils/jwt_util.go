@@ -2,7 +2,6 @@ package utils
 
 import (
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -19,7 +18,7 @@ func CheckPasswordHash(password, hash string) bool {
 
 // GenerateJWT creates a new JWT token for the given username
 func GenerateJWT(username string) (string, error) {
-	fmt.Println("GenerateJWT::: Entry")
+
 	claims := &jwt.StandardClaims{
 		ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
 		Subject:   username,

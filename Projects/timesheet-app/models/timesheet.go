@@ -1,6 +1,7 @@
 package models
 
 type TimesheetDetail struct {
+	EmployeeID      int    `json:"EmployeeID"`
 	ProjectID       int    `json:"ProjectID"`
 	SubProjectID    int    `json:"SubProjectID"`
 	JiraSnowID      string `json:"JiraSnowID"`

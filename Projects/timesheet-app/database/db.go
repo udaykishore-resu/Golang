@@ -23,8 +23,6 @@ func ConnectDB(cfg *config.DatabaseConfig) (*sql.DB, error) {
 		log.Printf("Error opening database: %v\n", err)
 		return nil, err
 	}
-	fmt.Println("DB Connection String: ", dataSourceName)
-
 	// Test the connection
 	if err := db.Ping(); err != nil {
 		log.Printf("Error pinging database: %v\n", err)

@@ -10,7 +10,7 @@ database:
   host: "localhost"
   port: 3306
   user: "root"
-  password: ""       # Replace with your actual password
+  password: "Vanshika@9"       # Replace with your actual password
   name: "test"      # Name of your database
 
 # JWT configuration
