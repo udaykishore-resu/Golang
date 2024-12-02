@@ -4,6 +4,9 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-image: url('/Users/anusharesu/Desktop/welcomee.jpg');
+    background-size: cover; /* Make sure the image covers the entire area */
+    background-position: center; /* Center the image */
     background-color: #f0f0f0;
 }
 

@@ -5,6 +5,9 @@
     align-items: center;
     height: 100vh;
     background-color: #f0f0f0;
+    background-image: url('/Users/anusharesu/Desktop/Thankyou.png');
+    background-size: cover; /* Make sure the image covers the entire area */
+    background-position: center; /* Center the image */
 }
 
 .backButton {
