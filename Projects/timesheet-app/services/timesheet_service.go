@@ -8,7 +8,7 @@ import (
 
 func SubmitTimesheet(timesheet models.TimesheetDetail) error {
 	db := database.GetDB()
-	query := "INSERT INTO Timesheets (EmployeeID,ProjectID,SubProjectID, JiraSnowID, TaskDescription, HoursSpent, Comments) VALUES (?,?, ?,?,?,?,?)"
+	query := "INSERT INTO Timesheets (ProjectID,SubProjectID, JiraSnowID, TaskDescription, HoursSpent, Comments) VALUES (?,?, ?,?,?,?)"
 	args := []interface{}{
 		timesheet.ProjectID,
 		timesheet.SubProjectID,
