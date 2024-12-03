@@ -1,119 +1,106 @@
-/* src/components/TimesheetEntry.module.css */
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;	
+    font-family: Raleway, sans-serif;
+}
 
 .container {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     min-height: 100vh;
-    background-image: url('/Users/anusharesu/Desktop/timesheet-template.png');
-    background-size: cover;
-    background-position: center;
-    padding: 20px;
-  }
-  
-  .formWrapper {
-    background-color: rgba(249, 249, 249, 0.9);
-    padding: 30px;
+    background: linear-gradient(90deg, #C7C5F4, #776BCC);
+}
+
+.formWrapper {
+    background: white;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
-  }
-  
-  h2 {
+    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 400px; /* Adjust as necessary */
+}
+
+h2 {
     text-align: center;
+    color: #4C489D;
     margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .form {
+}
+
+.form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-  }
-  
-  .formGroup {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
-  }
-  
-  input[type="text"],
-  input[type="number"],
-  select,
-  textarea {
+}
+
+.formGroup {
+    margin-bottom: 15px; /* Space between form groups */
+    position: relative; /* For positioning icons */
+}
+
+label {
+    margin-bottom: 5px; /* Space between label and input */
+    color: #4C489D; /* Label color */
+}
+
+select,
+input[type="text"],
+textarea {
+    border: none;
+    border-bottom: 2px solid #D1D1D4; /* Bottom border */
+    padding-left: 30px; /* Space for icon */
+    padding-bottom: 5px; /* Padding for bottom */
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
-  }
-  
-  textarea {
-    height: 100px;
-    resize: vertical;
-  }
-  
-  .hoursInput {
+    transition: border-color .2s; /* Transition effect */
+}
+
+select:hover,
+input[type="text"]:hover,
+textarea:hover,
+select:focus,
+input[type="text"]:focus,
+textarea:focus {
+    outline: none; /* Remove outline on focus */
+    border-bottom-color: #6A679E; /* Change border color on focus */
+}
+
+input[type="number"] {
+    width: calc(100% - 60px); /* Adjust width to accommodate buttons */
+}
+
+.hoursInput {
     display: flex;
-    align-items: center;
-  }
-  
-  .hoursInput button {
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: white;
+    align-items: center; /* Center buttons and input vertically */
+}
+
+.hoursInput button {
+    background-color: #6A679E; /* Button color */
+    color: white; /* Button text color */
     border: none;
     border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-  }
-  
-  .hoursInput button:hover {
-    background-color: #0056b3;
-  }
-  
-  .hoursInput input {
-    width: 80px;
-    text-align: center;
-    margin: 0 10px;
-    font-size: 16px;
-  }
-  
-  .submitButton {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    background-color: #28a745;
-    color: white;
+    padding: 5px 10px; /* Padding for buttons */
+    cursor: pointer; /* Pointer cursor for buttons */
+}
+
+.hoursInput button:hover {
+    background-color: #5D54A4; /* Darker shade on hover */
+}
+
+.submitButton {
+    background-color: #4C489D; /* Submit button color */
+    color: white; /* Submit button text color */
+    border-radius: 26px;
+    padding: 10px;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
-    font-size: 18px;
-    transition: background-color 0.3s;
-  }
-  
-  .submitButton:hover {
-    background-color: #218838;
-  }
-  
-  .loading, .error {
+}
+
+.submitButton:hover {
+    background-color: #6A679E; /* Lighter shade on hover */
+}
+
+.loading,
+.error {
     text-align: center;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 8px;
-    margin-top: 20px;
-  }
-  
-  .error {
-    color: #721c24;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-  }
+}

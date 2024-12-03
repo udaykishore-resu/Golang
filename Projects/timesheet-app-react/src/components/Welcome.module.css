@@ -1,26 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;	
+    font-family: Raleway, sans-serif;
+}
+
 .container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: url('/Users/anusharesu/Desktop/welcomee.jpg');
-    background-size: cover; /* Make sure the image covers the entire area */
-    background-position: center; /* Center the image */
-    background-color: #f0f0f0;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    min-height: 100vh; /* Full viewport height */
+    background: linear-gradient(90deg, #C7C5F4, #776BCC); /* Background gradient */
+}
+
+h1 {
+    color: #4C489D; /* Title color */
+    margin-bottom: 20px; /* Space below title */
+    text-align: center; /* Center text */
 }
 
 .loginButton {
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    background-color: #4C489D; /* Button color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: 26px; /* Rounded corners */
+    padding: 10px 20px; /* Padding inside button */
+    font-size: 16px; /* Font size for button text */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color .2s; /* Transition effect for hover */
 }
 
 .loginButton:hover {
-    background-color: #0056b3;
+    background-color: #6A679E; /* Lighter shade on hover */
 }

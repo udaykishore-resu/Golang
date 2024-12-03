@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"timesheet-app/database"
 	"timesheet-app/models"
 )
@@ -18,7 +17,5 @@ func SubmitTimesheet(timesheet models.TimesheetDetail) error {
 		timesheet.Comments,
 	}
 	_, err := db.Exec(query, args...)
-	fmt.Println("query: ", query)
-	fmt.Println("args: ", args)
 	return err
 }

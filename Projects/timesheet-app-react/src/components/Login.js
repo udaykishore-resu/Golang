@@ -8,6 +8,7 @@ function Login() {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [showForgotPassword, setShowForgotPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -41,6 +42,7 @@ function Login() {
         <div className={styles.container}>
             <div className={styles.screen}>
                 <div className={styles.screen__content}>
+                    <h1 className={styles.app_title}>Timesheet App</h1>
                     {!showForgotPassword ? (
                         <form className={styles.login} onSubmit={handleSubmit}>
                             <div className={styles.login__field}>
@@ -48,7 +50,7 @@ function Login() {
                                 <input 
                                     type="text" 
                                     className={styles.login__input} 
-                                    placeholder="User name / Email"
+                                    placeholder="Username / Email"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
                                     required
@@ -57,13 +59,17 @@ function Login() {
                             <div className={styles.login__field}>
                                 <i className={`${styles.login__icon} fas fa-lock`}></i>
                                 <input 
-                                    type="password" 
+                                    type={showPassword ? "text" : "password"}
                                     className={styles.login__input} 
                                     placeholder="Password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                 />
+                                <i 
+                                    className={`${styles.eye__icon} fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}
+                                    onClick={() => setShowPassword(!showPassword)}
+                                ></i>
                             </div>
                             <button type="submit" className={styles.login__submit}>
                                 <span className={styles.button__text}>Log In Now</span>
