@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "API for managing timesheets",
-        "title": "Timesheet API",
+        "title": "Timesheet APP",
         "contact": {
             "name": "Udaykishore Resu",
             "email": "udaykishoresu2@gmail.com"
