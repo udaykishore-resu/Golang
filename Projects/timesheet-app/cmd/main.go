@@ -12,6 +12,14 @@ import (
 	"github.com/rs/cors"
 )
 
+// @title Timesheet API
+// @version 1.0
+// @description API for managing timesheets
+// @contact.name Anusha Cheerla
+// @contact.email anu123.cheerla@gmail.com
+// @license.name MIT
+// @host localhost:8080
+// @BasePath /
 func main() {
 
 	// Load application configuration

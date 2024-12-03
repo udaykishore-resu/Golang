@@ -1,0 +1,18 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API for managing timesheets",
+        "title": "Timesheet API",
+        "contact": {
+            "name": "Anusha Cheerla",
+            "email": "anu123.cheerla@gmail.com"
+        },
+        "license": {
+            "name": "MIT"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {}
+}

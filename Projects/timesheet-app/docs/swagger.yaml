@@ -1,0 +1,13 @@
+basePath: /
+host: localhost:8080
+info:
+  contact:
+    email: anu123.cheerla@gmail.com
+    name: Anusha Cheerla
+  description: API for managing timesheets
+  license:
+    name: MIT
+  title: Timesheet API
+  version: "1.0"
+paths: {}
+swagger: "2.0"

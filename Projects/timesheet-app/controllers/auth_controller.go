@@ -9,7 +9,17 @@ import (
 	"timesheet-app/utils"
 )
 
-// LoginHandler authenticates a user and returns a JWT token if successful
+// LoginHandler godoc
+// @Summary Authenticate user and generate JWT token
+// @Description Validates user credentials and returns a JWT token on successful authentication
+// @Tags Authentication
+// @Accept  json
+// @Produce  json
+// @Param credentials body models.Employee true "User credentials"
+// @Success 200 {object} map[string]string "token"
+// @Failure 400 {object} map[string]string "Invalid request payload"
+// @Failure 401 {object} map[string]string "Invalid username or password"
+// @Router /login [post]
 func LoginHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var credentials models.Employee

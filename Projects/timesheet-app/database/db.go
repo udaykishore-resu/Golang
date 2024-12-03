@@ -13,6 +13,7 @@ var db *sql.DB
 
 // ConnectDB initializes the database connection with the given config
 func ConnectDB(cfg *config.DatabaseConfig) (*sql.DB, error) {
+
 	// Use values from the config
 	dataSourceName := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
 		cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.Name)
