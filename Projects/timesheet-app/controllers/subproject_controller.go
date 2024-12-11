@@ -17,6 +17,7 @@ import (
 // @Failure 400 {object} map[string]string "Missing or invalid project ID"
 // @Failure 500 {object} map[string]string "Could not retrieve subprojects"
 // @Router /subprojects [get]
+
 func GetSubprojectsHandler(w http.ResponseWriter, r *http.Request) {
 	// Extract the project ID from the URL parameters
 	projectIDStr := r.URL.Query().Get("project_id") // Assuming you send the project ID as a query parameter

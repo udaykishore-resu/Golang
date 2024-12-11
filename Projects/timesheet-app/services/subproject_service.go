@@ -6,10 +6,13 @@ import (
 	"timesheet-app/models"
 )
 
+// getDBFunc is a variable that can be replaced for testing
+var getDBFunc = database.GetDB
+
 // GetSubprojects retrieves a list of subprojects for a given project ID from the database
 // If no subprojects are found, it returns the project details instead
 func GetSubprojects(projectID int) (interface{}, error) {
-	db := database.GetDB() // Get the database connection
+	db := getDBFunc() // Get the database connection
 
 	// Query to fetch subprojects based on the provided project ID
 	subprojectsQuery := "SELECT SubProjectID, SubProjectName, ProjectID FROM SubProjects WHERE ProjectID = ?"
