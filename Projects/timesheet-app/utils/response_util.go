@@ -2,12 +2,10 @@ package utils
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
 func RespondWithError(w http.ResponseWriter, code int, message string) {
-	fmt.Println("RespondWithError: message :", message)
 	RespondWithJSON(w, code, map[string]string{"error": message})
 }
 
