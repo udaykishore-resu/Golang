@@ -24,8 +24,6 @@ func preProcess(sli []string) []string {
 	return res
 }
 
-// krish@techstargroup.com
-
 func SolveIbmQuestion() {
 	org := []string{"0000", "1234", "6969"}
 	inp := []string{"##12#234", "001#2#00", "6969", "0011#22#00"}
