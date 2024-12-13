@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { loginUser, forgotPassword, clearError } from '../redux/authSlice';
 import styles from './Login.module.css';
 
 function Login() {
@@ -9,35 +10,34 @@ function Login() {
     const [email, setEmail] = useState('');
     const [showForgotPassword, setShowForgotPassword] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { loading, error, user } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (user) {
+            navigate('/timesheet');
+        }
+    }, [user, navigate]);
+
+    useEffect(() => {
+        if (error) {
+            alert(error);
+            dispatch(clearError());
+        }
+    }, [error, dispatch]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:8080/login', { username, password });
-            if (response.data && response.data.token) {
-                localStorage.setItem('jwtToken', response.data.token);
-                localStorage.setItem('refreshToken', response.data.refreshToken);
-                navigate('/timesheet');
-            }
-        } catch (error) {
-            console.error('Login failed:', error);
-            alert('Login failed. Please check your credentials.');
-        }
+        dispatch(loginUser({ username, password }));
     };
 
     const handleForgotPassword = async (e) => {
         e.preventDefault();
-        try {
-            await axios.post('http://localhost:8080/forgot-password', { email });
-            alert('Password reset link sent to your email.');
-            setShowForgotPassword(false);
-        } catch (error) {
-            console.error('Failed to send reset link:', error);
-            alert('Failed to send reset link. Please try again.');
-        }
+        dispatch(forgotPassword(email));
     };
-    
+
     return (
         <div className={styles.container}>
             <div className={styles.screen}>
@@ -71,8 +71,8 @@ function Login() {
                                     onClick={() => setShowPassword(!showPassword)}
                                 ></i>
                             </div>
-                            <button type="submit" className={styles.login__submit}>
-                                <span className={styles.button__text}>Log In Now</span>
+                            <button type="submit" className={styles.login__submit} disabled={loading}>
+                                <span className={styles.button__text}>{loading ? 'Logging in...' : 'Log In Now'}</span>
                                 <i className={`${styles.button__icon} fas fa-chevron-right`}></i>
                             </button>
                             <div className={styles.forgot_password}>
@@ -92,8 +92,8 @@ function Login() {
                                     required
                                 />
                             </div>
-                            <button type="submit" className={styles.login__submit}>
-                                <span className={styles.button__text}>Send Reset Link</span>
+                            <button type="submit" className={styles.login__submit} disabled={loading}>
+                                <span className={styles.button__text}>{loading ? 'Sending...' : 'Send Reset Link'}</span>
                                 <i className={`${styles.button__icon} fas fa-paper-plane`}></i>
                             </button>
                             <div className={styles.forgot_password}>
