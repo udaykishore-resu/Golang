@@ -14,7 +14,11 @@ func add(a, b int) int {
 func DisplayComposite() {
 	var arr [5]int = [5]int{1, 2, 3, 4, 5}
 	fmt.Println(arr)
-
+	arr[0] = 1
+	arr[1] = 2
+	arr[2] = 3
+	arr[3] = 4
+	arr[4] = 5
 	// arr[5] = 6 // If you will try to add an element, it will panic at compile time. COMPILE TIME ERROR
 
 	var slice []int = []int{1, 2, 3, 4, 5}

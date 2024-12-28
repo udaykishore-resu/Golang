@@ -1,4 +1,4 @@
-package basictypes
+package main
 
 import "fmt"
 
@@ -8,7 +8,7 @@ import "fmt"
 - Default integer types are int and uint, which vary depending on the architecture (32-bit or 64-bit).
 */
 
-func DisplayTypes() {
+func main() {
 	var x int = 40
 	var y int8 = 50
 

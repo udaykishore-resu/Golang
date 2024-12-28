@@ -1,4 +1,4 @@
-package customtypes
+package main
 
 import (
 	"fmt"
@@ -18,7 +18,7 @@ const (
 	YB
 )
 
-func DisplayComposite() {
+func main() {
 	type Mytype int
 	var i Mytype = 33
 
