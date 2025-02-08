@@ -36,4 +36,22 @@ archives:
     format: zip
     name_template: "{{ .ProjectName }}_{{ .Version }}_windows_{{ .Arch }}"
 
+before:
+  hooks:
+    - go test ./...
+
+signs:
+  - artifacts: build/*
+    cmd: gpg
+    args: ["--armor", "--detach-sign", "--output", "{{ .ArtifactName }}.sig", "{{ .ArtifactPath }}"]
+
+changelog:
+  use: git # or set 'disable: true' to completely skip changelog
+
+release:
+  github:
+    owner: udaykishore-resu
+    name: golang-techstack
+  draft: false
+  prerelease: "false"
 # Rest of the configuration remains the same...

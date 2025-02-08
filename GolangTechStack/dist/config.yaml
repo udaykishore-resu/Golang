@@ -3,7 +3,8 @@ project_name: golang-techstack
 release:
   github:
     owner: udaykishore-resu
-    name: Golang
+    name: golang-techstack
+  prerelease: "false"
   name_template: '{{.Tag}}'
 builds:
   - id: linux_amd64
@@ -142,12 +143,27 @@ checksum:
   name_template: '{{ .ProjectName }}_{{ .Version }}_checksums.txt'
   algorithm: sha256
 changelog:
+  use: git
   format: '{{ .SHA }}: {{ .Message }} ({{ with .AuthorUsername }}@{{ . }}{{ else }}{{ .AuthorName }} <{{ .AuthorEmail }}>{{ end }})'
 dist: dist
+signs:
+  - id: default
+    cmd: gpg
+    args:
+      - --armor
+      - --detach-sign
+      - --output
+      - '{{ .ArtifactName }}.sig'
+      - '{{ .ArtifactPath }}'
+    signature: ${artifact}.sig
+    artifacts: build/*
 env_files:
   github_token: ~/.config/goreleaser/github_token
   gitlab_token: ~/.config/goreleaser/gitlab_token
   gitea_token: ~/.config/goreleaser/gitea_token
+before:
+  hooks:
+    - go test ./...
 source:
   name_template: '{{ .ProjectName }}-{{ .Version }}'
   format: tar.gz
