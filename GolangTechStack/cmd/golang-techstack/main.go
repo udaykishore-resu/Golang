@@ -1,9 +1,9 @@
 package main
 
-import "golang-tech-stack/programs"
+import switchstatement "golang-tech-stack/concepts/switchStatement"
 
 func main() {
-	//switchstatement.SwitchFunc()
+	switchstatement.SwitchFunc()
 	//switchstatement.DisplaySwitchEval()
 	//loop.DisplayforLoop()
 	//fmt.Println("I am CallbyVal")
@@ -25,6 +25,6 @@ func main() {
 	//channels.UnbufferedChan()
 	//programs.Factorial()
 	//programs.FindPalindrome()
-	programs.FindBalancedStrStackBased()
+	//programs.FindBalancedStrStackBased()
 
 }

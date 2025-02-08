@@ -1,0 +1,60 @@
+# GoReleaser Configuration
+version: 2  # Add this line to specify version 2
+
+project_name: golang-techstack
+
+# Build configurations for various OS and architecture
+builds:
+  - id: linux_amd64
+    main: ./cmd/golang-techstack
+    goarch: [amd64]
+    goos: [linux]
+  - id: darwin_arm64
+    main: ./cmd/golang-techstack
+    goarch: [arm64]
+    goos: [darwin]
+  - id: windows_amd64
+    main: ./cmd/golang-techstack
+    goarch: [amd64]
+    goos: [windows]
+
+# Archives: Archive the built binaries (tar.gz, zip, etc.)
+archives:
+  - format: tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ replace .Os \"darwin\" \"macos\" }}_{{ .Arch }}"
+    files:
+      - golang-techstack
+    format_overrides:
+      - goos: windows 
+        format: zip
+  - format: zip
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ replace .Os \"windows\" \"win\" }}_{{ .Arch }}"
+    files:
+      - golang-techstack
+
+# Before creating the release, run tests and make sure everything is working
+before:
+  hooks:
+    - go test ./...
+
+# Sign releases (optional)
+signs:
+  - artifacts: build/*
+    cmd: gpg
+    args: ["--armor", "--detach-sign", "--output", "{{ .ArtifactName }}.sig", "{{ .ArtifactPath }}"]
+
+# GitHub release configuration
+changelog:
+  use: git  # Skip changelog generation, can be customized to suit your needs
+
+release:
+  github:
+    owner: "udaykishore-resu"
+    name: "golang-techstack"
+  draft: false
+  prerelease: "false"
+  #token: "{{ .Env.GITHUB_TOKEN }}"
+  #upload:
+  #  assets:
+  #    - "build/*"
+  #cleanup: true
