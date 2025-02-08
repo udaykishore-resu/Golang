@@ -1,0 +1,12 @@
+# Build stage
+FROM golang:1.21-alpine AS builder
+WORKDIR /app
+COPY . .
+RUN go mod download
+RUN CGO_ENABLED=0 go build -o /golang-techstack ./cmd/golang-techstack
+
+# Final stage
+FROM alpine:latest
+COPY --from=builder /golang-techstack /app/golang-techstack
+EXPOSE 8080
+CMD ["/app/golang-techstack"]

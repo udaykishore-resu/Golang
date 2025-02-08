@@ -56,3 +56,22 @@ func buildBinary(goos, goarch string) error {
 		"go", "build", "-o", outputPath, "./cmd/golang-techstack",
 	)
 }
+
+// Release namespace
+type Release mg.Namespace
+
+// Full release process
+func (Release) Full() error {
+	fmt.Println("Creating full release...")
+	mg.Deps(Build{}.All)
+	return sh.Run("goreleaser", "release", "--clean")
+}
+
+// Docker namespace
+type Docker mg.Namespace
+
+// Build Docker image
+func (Docker) Build() error {
+	fmt.Println("Building Docker image...")
+	return sh.Run("docker", "build", "-t", "golang-techstack:latest", ".")
+}

@@ -55,3 +55,14 @@ release:
   draft: false
   prerelease: "false"
 # Rest of the configuration remains the same...
+
+dockers:
+  - image_templates:
+      - "udaykishore/golang-techstack:{{ .Version }}"
+      - "udaykishore/golang-techstack:latest"
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+  
