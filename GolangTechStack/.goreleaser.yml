@@ -6,19 +6,22 @@ builds:
     main: ./cmd/golang-techstack
     goos: [linux]
     goarch: [amd64]
-    binary: golang-techstack  # Explicit binary name
+    dir: tmp/build
+    binary: golang-techstack-linux_amd64
 
   - id: darwin_arm64
     main: ./cmd/golang-techstack
     goos: [darwin]
     goarch: [arm64]
-    binary: golang-techstack  # Explicit binary name
+    dir: tmp/build
+    binary: golang-techstack-darwin_arm64
 
   - id: windows_amd64
     main: ./cmd/golang-techstack
     goos: [windows]
     goarch: [amd64]
-    binary: golang-techstack  # Windows extension
+    dir: tmp/build
+    binary: golang-techstack-windows_amd64.exe
 
 archives:
   - id: linux

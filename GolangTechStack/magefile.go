@@ -6,7 +6,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"path/filepath"
 
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
@@ -16,22 +15,38 @@ type Build mg.Namespace
 
 // Build the application for multiple platforms
 func (Build) All() error {
-	// List of targets to build for
-	targets := []struct{ OS, Arch string }{
-		{"linux", "amd64"},
-		{"darwin", "arm64"},
-		{"windows", "amd64"},
+	fmt.Println("Building all targets...")
+
+	// Create build directory if not exists
+	if err := os.MkdirAll("tmp/build", 0755); err != nil {
+		return err
 	}
 
-	// Loop through each target OS/Arch combination and build
-	for _, target := range targets {
-		if err := buildBinary(target.OS, target.Arch); err != nil {
+	// Build commands using tmp/build directory
+	commands := []struct {
+		os   string
+		arch string
+		ext  string
+	}{
+		{"linux", "amd64", ""},
+		{"darwin", "arm64", ""},
+		{"windows", "amd64", ".exe"},
+	}
+
+	for _, cmd := range commands {
+		output := fmt.Sprintf("tmp/build/golang-techstack-%s_%s%s",
+			cmd.os, cmd.arch, cmd.ext)
+		err := sh.Run("go", "build",
+			"-o", output,
+			"./cmd/golang-techstack")
+		if err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
+/*
 // Helper function to build binary for a specific OS and architecture
 func buildBinary(goos, goarch string) error {
 
@@ -56,13 +71,14 @@ func buildBinary(goos, goarch string) error {
 		"go", "build", "-o", outputPath, "./cmd/golang-techstack",
 	)
 }
-
+*/
 // Release namespace
 type Release mg.Namespace
 
 // Full release process
 func (Release) Full() error {
 	fmt.Println("Creating full release...")
+	defer os.RemoveAll("tmp/build") // Clean up after release
 	mg.Deps(Build{}.All)
 	return sh.Run("goreleaser", "release", "--clean")
 }
