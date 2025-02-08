@@ -1,14 +1,16 @@
-package main
+package programs
 
-func factorial[P ~int](num P) P {
-	if num <= 1 {
-		return num
+import "fmt"
+
+func factorialn(n int) int {
+	if n == 0 {
+		return 1
 	}
-
-	return factorial[P](num-1) * num
+	return n * factorialn(n-1)
 }
 
-func main() {
+func Factorial() {
 	num := 5
-	factorial(num)
+	result := factorialn(num)
+	fmt.Println(result)
 }

@@ -5,6 +5,7 @@ import "fmt"
 type Person struct {
 	Name string
 	Age  int
+	Address string
 }
 
 func add(a, b int) int {
@@ -12,9 +13,9 @@ func add(a, b int) int {
 }
 
 func DisplayComposite() {
-	var arr [5]int = [5]int{1, 2, 3, 4, 5}
+	var arr [5]int = [5]int{1, 2, 3, 4, 5} // array of 5 integers
 	fmt.Println(arr)
-	arr[0] = 1
+	arr[0] = 1 
 	arr[1] = 2
 	arr[2] = 3
 	arr[3] = 4
@@ -28,7 +29,7 @@ func DisplayComposite() {
 	var dic map[string]int = map[string]int{"one": 1, "two": 2, "three": 3}
 	fmt.Println(dic)
 
-	var p Person = Person{Name: "Nani", Age: 33}
+	var p Person = Person{Name: "Nani", Age: 33,Address: "Khammam"}
 	fmt.Println(p)
 
 	var i int = 40
