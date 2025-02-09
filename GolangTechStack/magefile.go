@@ -59,17 +59,22 @@ func (Build) Clean() error {
 // Release namespace
 type Release mg.Namespace
 
-// Create creates a new release using goreleaser
+// Create creates a new release using goreleaser in snapshot mode
 func (Release) Create() error {
-	fmt.Println("Creating release with GoReleaser...")
+	fmt.Println("Creating local release with GoReleaser...")
 
 	// Clean the dist directory
 	if err := os.RemoveAll("dist"); err != nil {
 		return fmt.Errorf("failed to clean dist directory: %w", err)
 	}
 
-	// Create a snapshot release
-	return sh.Run("goreleaser", "release", "--clean")
+	// Set environment variable to indicate this is a snapshot
+	env := map[string]string{
+		"SNAPSHOT": "true",
+	}
+
+	// Create a local release
+	return sh.RunWith(env, "goreleaser", "release", "--snapshot", "--clean")
 }
 
 // Test runs go tests

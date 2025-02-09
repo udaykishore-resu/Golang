@@ -44,20 +44,27 @@ builds:
 archives:
   - id: linux
     builds: [linux_amd64]
-    format_overrides: []  # Let GoReleaser choose the default format
+    formats: ['tar.gz'] 
     name_template: "{{ .ProjectName }}_{{ .Version }}_linux_{{ .Arch }}"
 
   - id: macos
     builds: [darwin_arm64]
-    format_overrides: []  # Let GoReleaser choose the default format
+    formats: ['tar.gz']
     name_template: "{{ .ProjectName }}_{{ .Version }}_macos_{{ .Arch }}"
 
   - id: windows
     builds: [windows_amd64]
-    format_overrides: 
-      - goos: windows
-        format: zip
+    formats: ['zip']
     name_template: "{{ .ProjectName }}_{{ .Version }}_windows_{{ .Arch }}"
+
+before:
+  hooks:
+    - go test ./...
+
+#signs:
+ # - artifacts: all
+  #  cmd: gpg
+   # args: ["--armor", "--detach-sign", "--output", "{{ .ArtifactPath }}.sig", "{{ .ArtifactPath }}"]
 
 changelog:
   use: git
@@ -66,3 +73,4 @@ release:
   github:
     owner: udaykishore-resu
     name: golang-techstack
+  draft: false

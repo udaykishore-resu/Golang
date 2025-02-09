@@ -8,3 +8,6 @@ mage docker:build
 
 # 3. Create full release (including Docker push)
 mage release:full
+
+# 4. List mage commands
+mage -l
