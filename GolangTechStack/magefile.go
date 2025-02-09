@@ -82,3 +82,12 @@ func Test() error {
 	fmt.Println("Running tests...")
 	return sh.Run("go", "test", "./...")
 }
+
+// Docker namespace
+type Docker mg.Namespace
+
+// Build Docker image
+func (Docker) Build() error {
+	fmt.Println("Building Docker image...")
+	return sh.Run("docker", "build", "-t", "golang-techstack:latest", ".")
+}
