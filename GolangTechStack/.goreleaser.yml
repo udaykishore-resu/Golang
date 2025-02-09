@@ -44,24 +44,20 @@ builds:
 archives:
   - id: linux
     builds: [linux_amd64]
-    format: tar.gz
+    format_overrides: []  # Let GoReleaser choose the default format
     name_template: "{{ .ProjectName }}_{{ .Version }}_linux_{{ .Arch }}"
-    files: [LICENSE*, README*, CHANGELOG*]
 
   - id: macos
     builds: [darwin_arm64]
-    format: tar.gz
+    format_overrides: []  # Let GoReleaser choose the default format
     name_template: "{{ .ProjectName }}_{{ .Version }}_macos_{{ .Arch }}"
-    files: [LICENSE*, README*, CHANGELOG*]
 
   - id: windows
     builds: [windows_amd64]
-    format: zip
+    format_overrides: 
+      - goos: windows
+        format: zip
     name_template: "{{ .ProjectName }}_{{ .Version }}_windows_{{ .Arch }}"
-    files: [LICENSE*, README*, CHANGELOG*]
-
-snapshot:
-  name_template: "{{ .Version }}-SNAPSHOT-{{.ShortCommit}}"
 
 changelog:
   use: git

@@ -69,7 +69,7 @@ func (Release) Create() error {
 	}
 
 	// Create a snapshot release
-	return sh.Run("goreleaser", "release", "--snapshot", "--clean", "--skip-publish")
+	return sh.Run("goreleaser", "release", "--clean")
 }
 
 // Test runs go tests
