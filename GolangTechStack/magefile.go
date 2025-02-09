@@ -6,6 +6,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
@@ -49,9 +50,29 @@ func (Build) All() error {
 // Release namespace
 type Release mg.Namespace
 
+// checkGitState checks if the git repository is clean
+func checkGitState() error {
+	// Check if there are uncommitted changes
+	output, err := sh.Output("git", "status", "--porcelain")
+	if err != nil {
+		return fmt.Errorf("failed to check git status: %w", err)
+	}
+
+	if strings.TrimSpace(output) != "" {
+		return fmt.Errorf("git repository is not clean. Please commit all changes before releasing")
+	}
+	return nil
+}
+
 // Full release process using Goreleaser (let it handle builds)
 func (Release) Full() error {
 	fmt.Println("Creating full release with Goreleaser...")
+
+	// Check git state before proceeding
+	if err := checkGitState(); err != nil {
+		return err
+	}
+
 	return sh.Run("goreleaser", "release", "--clean")
 }
 
