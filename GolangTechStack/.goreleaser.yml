@@ -77,8 +77,8 @@ release:
 
 dockers:
   - image_templates:
-      - "udaykishore/golang-techstack:{{ .Version }}"
-      - "udaykishore/golang-techstack:latest"
+      - "udaykishoreresu/golang-techstack:{{ .Version }}"
+      - "udaykishoreresu/golang-techstack:latest"
     dockerfile: Dockerfile
     build_flag_templates:
       - "--pull"
