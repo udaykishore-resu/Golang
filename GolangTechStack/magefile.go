@@ -11,19 +11,20 @@ import (
 	"github.com/magefile/mage/sh"
 )
 
+// Default target to run when none is specified
+var Default = Build.All
+
+// Build namespace
 type Build mg.Namespace
 
-// Build the application for multiple platforms
+// All builds the project for all platforms
 func (Build) All() error {
-	fmt.Println("Building all targets...")
-
-	// Create build directory if not exists
-	if err := os.MkdirAll("tmp/build", 0755); err != nil {
-		return err
+	fmt.Println("Building for all platforms...")
+	if err := os.MkdirAll("build", 0755); err != nil {
+		return fmt.Errorf("failed to create build directory: %w", err)
 	}
 
-	// Build commands using tmp/build directory
-	commands := []struct {
+	platforms := []struct {
 		os   string
 		arch string
 		ext  string
@@ -33,61 +34,46 @@ func (Build) All() error {
 		{"windows", "amd64", ".exe"},
 	}
 
-	for _, cmd := range commands {
-		output := fmt.Sprintf("tmp/build/golang-techstack-%s_%s%s",
-			cmd.os, cmd.arch, cmd.ext)
-		err := sh.Run("go", "build",
-			"-o", output,
-			"./cmd/golang-techstack")
-		if err != nil {
-			return err
+	for _, p := range platforms {
+		binary := fmt.Sprintf("build/golang-techstack-%s_%s%s", p.os, p.arch, p.ext)
+		fmt.Printf("Building for %s/%s...\n", p.os, p.arch)
+
+		env := map[string]string{
+			"GOOS":   p.os,
+			"GOARCH": p.arch,
+		}
+
+		if err := sh.RunWith(env, "go", "build", "-o", binary, "./cmd/golang-techstack"); err != nil {
+			return fmt.Errorf("error building for %s/%s: %w", p.os, p.arch, err)
 		}
 	}
 	return nil
 }
 
-/*
-// Helper function to build binary for a specific OS and architecture
-func buildBinary(goos, goarch string) error {
-
-	// Define the output binary file path in the build folder
-	outputPath := filepath.Join("build", fmt.Sprintf("golang-techstack-%s_%s", goos, goarch))
-	if goos == "windows" {
-		outputPath += ".exe" // Add .exe for Windows
-	}
-
-	// Ensure the build directory exists
-	if err := os.MkdirAll("build", 0755); err != nil {
-		return err
-	}
-
-	// Run the go build command for the specified target OS and architecture
-	return sh.RunWith(
-		map[string]string{
-			"GOOS":        goos,
-			"GOARCH":      goarch,
-			"CGO_ENABLED": "0", // Disable CGO for static binaries
-		},
-		"go", "build", "-o", outputPath, "./cmd/golang-techstack",
-	)
+// Clean removes build artifacts
+func (Build) Clean() error {
+	fmt.Println("Cleaning build directory...")
+	return os.RemoveAll("build")
 }
-*/
+
 // Release namespace
 type Release mg.Namespace
 
-// Full release process
-func (Release) Full() error {
-	fmt.Println("Creating full release...")
-	defer os.RemoveAll("tmp/build") // Clean up after release
-	mg.Deps(Build{}.All)
-	return sh.Run("goreleaser", "release", "--clean")
+// Create creates a new release using goreleaser
+func (Release) Create() error {
+	fmt.Println("Creating release with GoReleaser...")
+
+	// Clean the dist directory
+	if err := os.RemoveAll("dist"); err != nil {
+		return fmt.Errorf("failed to clean dist directory: %w", err)
+	}
+
+	// Create a snapshot release
+	return sh.Run("goreleaser", "release", "--snapshot", "--clean", "--skip-publish")
 }
 
-// Docker namespace
-type Docker mg.Namespace
-
-// Build Docker image
-func (Docker) Build() error {
-	fmt.Println("Building Docker image...")
-	return sh.Run("docker", "build", "-t", "golang-techstack:latest", ".")
+// Test runs go tests
+func Test() error {
+	fmt.Println("Running tests...")
+	return sh.Run("go", "test", "./...")
 }
