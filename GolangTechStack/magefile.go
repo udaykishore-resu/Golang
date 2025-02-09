@@ -6,6 +6,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
@@ -59,22 +60,16 @@ func (Build) Clean() error {
 // Release namespace
 type Release mg.Namespace
 
-// Create creates a new release using goreleaser in snapshot mode
-func (Release) Create() error {
-	fmt.Println("Creating local release with GoReleaser...")
+// Full creates a full production release and pushes Docker image
+func (Release) Full() error {
+	mg.Deps(Release.createProduction, Docker.Push)
+	return nil
+}
 
-	// Clean the dist directory
-	if err := os.RemoveAll("dist"); err != nil {
-		return fmt.Errorf("failed to clean dist directory: %w", err)
-	}
-
-	// Set environment variable to indicate this is a snapshot
-	env := map[string]string{
-		"SNAPSHOT": "true",
-	}
-
-	// Create a local release
-	return sh.RunWith(env, "goreleaser", "release", "--snapshot", "--clean")
+// Create production release (without snapshot)
+func (Release) createProduction() error {
+	fmt.Println("Creating production release with GoReleaser...")
+	return sh.Run("goreleaser", "release", "--clean")
 }
 
 // Test runs go tests
@@ -86,8 +81,41 @@ func Test() error {
 // Docker namespace
 type Docker mg.Namespace
 
-// Build Docker image
+// Build Docker image with version tag
 func (Docker) Build() error {
 	fmt.Println("Building Docker image...")
-	return sh.Run("docker", "build", "-t", "golang-techstack:latest", ".")
+	version, err := getVersion()
+	if err != nil {
+		return err
+	}
+
+	return sh.Run("docker", "build",
+		"-t", "golang-techstack:latest",
+		"-t", fmt.Sprintf("golang-techstack:%s", version),
+		".",
+	)
+}
+
+// Push Docker image to registry
+func (Docker) Push() error {
+	fmt.Println("Pushing Docker image...")
+	version, err := getVersion()
+	if err != nil {
+		return err
+	}
+
+	mg.Deps(Docker.Build)
+
+	return sh.Run("docker", "push",
+		fmt.Sprintf("golang-techstack:%s", version),
+	)
+}
+
+// Helper to get current version from git tag
+func getVersion() (string, error) {
+	version, err := sh.Output("git", "describe", "--tags", "--abbrev=0")
+	if err != nil {
+		return "", fmt.Errorf("failed to get version: %w", err)
+	}
+	return strings.TrimSpace(version), nil
 }
