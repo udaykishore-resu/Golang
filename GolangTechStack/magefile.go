@@ -12,16 +12,15 @@ import (
 )
 
 type Build mg.Namespace
-type Release mg.Namespace
 
 func (Build) All() error {
-	fmt.Println("Building all the targets....")
+	fmt.Println("Building all targets...")
 
-	if err := os.MkdirAll("build", 0755); err != nil {
+	// Use temporary directory
+	if err := os.MkdirAll("dist", 0755); err != nil {
 		return err
 	}
 
-	// commands to build binaries
 	commands := []struct {
 		os   string
 		arch string
@@ -33,7 +32,7 @@ func (Build) All() error {
 	}
 
 	for _, cmd := range commands {
-		outputPath := fmt.Sprintf("build/golang-techstack-%s_%s%s", cmd.os, cmd.arch, cmd.ext)
+		outputPath := fmt.Sprintf("dist/golang-techstack-%s_%s%s", cmd.os, cmd.arch, cmd.ext)
 		err := sh.Run("go", "build", "-o", outputPath, "./cmd/golang-techstack")
 		if err != nil {
 			return err
@@ -42,9 +41,14 @@ func (Build) All() error {
 	return nil
 }
 
+type Release mg.Namespace
+
 func (Release) Full() error {
+	mg.Deps(Build.All)
 	fmt.Println("Creating full release...")
-	defer os.RemoveAll("build") // Clean up after release
-	mg.Deps(Build{}.All)
+
+	// Clean up after release
+	defer os.RemoveAll("dist")
+
 	return sh.Run("goreleaser", "release", "--clean")
 }
