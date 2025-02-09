@@ -41,7 +41,7 @@ archives:
 
 before:
   hooks:
-    - go test ./..
+    - go test ./...
 
 signs:
   - artifacts: build/*
