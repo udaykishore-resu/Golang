@@ -6,18 +6,21 @@ builds:
     main: ./cmd/golang-techstack
     goos: [linux]
     goarch: [amd64]
+    dir: tmp/build
     binary: golang-techstack-linux_amd64
 
   - id: darwin_arm64
     main: ./cmd/golang-techstack
     goos: [darwin]
     goarch: [arm64]
+    dir: tmp/build
     binary: golang-techstack-darwin_arm64
 
   - id: windows_amd64
     main: ./cmd/golang-techstack
     goos: [windows]
     goarch: [amd64]
+    dir: tmp/build
     binary: golang-techstack-windows_amd64.exe
 
 archives:
@@ -41,12 +44,12 @@ before:
     - go test ./...
 
 signs:
-  - artifacts: all
+  - artifacts: build/*
     cmd: gpg
     args: ["--armor", "--detach-sign", "--output", "{{ .ArtifactName }}.sig", "{{ .ArtifactPath }}"]
 
 changelog:
-  use: git
+  use: git # or set 'disable: true' to completely skip changelog
 
 release:
   github:
@@ -54,3 +57,14 @@ release:
     name: golang-techstack
   draft: false
   prerelease: "false"
+
+dockers:
+  - image_templates:
+      - "udaykishore/golang-techstack:{{ .Version }}"
+      - "udaykishore/golang-techstack:latest"
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+  
