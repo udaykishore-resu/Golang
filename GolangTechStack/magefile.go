@@ -34,7 +34,7 @@ func (Build) All() error {
 	}
 
 	for _, cmd := range commands {
-		output := fmt.Sprintf("tmp/build/golang-techstack-%s_%s%s",
+		output := fmt.Sprintf("build/golang-techstack-%s_%s%s",
 			cmd.os, cmd.arch, cmd.ext)
 		err := sh.Run("go", "build",
 			"-o", output,
@@ -78,7 +78,7 @@ type Release mg.Namespace
 // Full release process
 func (Release) Full() error {
 	fmt.Println("Creating full release...")
-	defer os.RemoveAll("tmp/build") // Clean up after release
+	defer os.RemoveAll("build") // Clean up after release
 	mg.Deps(Build{}.All)
 	return sh.Run("goreleaser", "release", "--clean")
 }
