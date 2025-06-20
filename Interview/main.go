@@ -1,8 +1,11 @@
 package main
 
-import "Interview/question/question"
+import (
+	programs "Interview/question/common"
+)
 
 func main() {
-	question.SolveIbmQuestion()
-	question.SolveHclQuestion()
+	//question.SolveIbmQuestion()
+	//question.SolveHclQuestion()
+	programs.CheckValidParentheses()
 }

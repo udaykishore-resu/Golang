@@ -1,0 +1,18 @@
+name: CI Pipeline
+on: [push, pull_request]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+      - run: go mod tidy
+      - name: Run Tests
+        run: mage test:coverage
+      - name: Build Docker
+        run: mage build:docker
+      - name: Lint Helm
+        run: mage helm:lint

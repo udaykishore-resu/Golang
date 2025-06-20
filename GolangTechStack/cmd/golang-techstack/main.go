@@ -1,9 +1,11 @@
 package main
 
-import switchstatement "golang-tech-stack/concepts/switchStatement"
+import (
+	"golang-tech-stack/concepts/enum"
+)
 
 func main() {
-	switchstatement.SwitchFunc()
+	//switchstatement.SwitchFunc()
 	//switchstatement.DisplaySwitchEval()
 	//loop.DisplayforLoop()
 	//fmt.Println("I am CallbyVal")
@@ -26,5 +28,5 @@ func main() {
 	//programs.Factorial()
 	//programs.FindPalindrome()
 	//programs.FindBalancedStrStackBased()
-
+	enum.PrintEnum()
 }

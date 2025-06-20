@@ -1,0 +1,8 @@
+image:
+  repository: ghcr.io/yourusername/data-structures-go
+  tag: latest
+service:
+  type: ClusterIP
+  port: 8080
+otel:
+  endpoint: http://otel-collector:4317
