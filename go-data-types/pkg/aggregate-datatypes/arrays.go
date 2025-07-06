@@ -20,4 +20,44 @@ func DisplayArrays() {
 	for i := 0; i < len(b); i++ {
 		fmt.Println(b[i])
 	}
+
+	displayTwoDArrays()
+	displayThreeDArrays()
+}
+
+func displayThreeDArrays() {
+	threeDMatrix := [2][3][4]int{
+		{
+			{1, 2, 3, 4},
+			{5, 6, 7, 8},
+			{9, 10, 11, 12},
+		},
+		{
+			{13, 14, 15, 16},
+			{17, 18, 19, 20},
+			{21, 22, 23, 24},
+		},
+	}
+
+	for i, matrix := range threeDMatrix {
+		for j, row := range matrix {
+			for k, val := range row {
+				fmt.Printf("threeDMatrix[%d][%d][%d] = %d\n", i, j, k, val)
+			}
+		}
+	}
+}
+
+func displayTwoDArrays() {
+	twoDMatrix := [3][4]int{
+		{1, 2, 3, 4},
+		{5, 6, 7, 8},
+		{9, 10, 11, 12},
+	}
+
+	for i, row := range twoDMatrix {
+		for j, value := range row {
+			fmt.Printf("twoDMatrix[%d][%d] = %d\n", i, j, value)
+		}
+	}
 }
