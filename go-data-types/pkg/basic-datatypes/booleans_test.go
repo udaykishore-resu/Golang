@@ -1,6 +1,7 @@
 package basicdatatypes
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"testing"
@@ -40,5 +41,5 @@ func TestDisplayBooleanOutput(t *testing.T) {
 		{"bool", "false"},
 	}
 
-	func TestBool
+	fmt.Println(data, tests)
 }
