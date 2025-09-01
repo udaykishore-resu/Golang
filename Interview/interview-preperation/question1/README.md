@@ -145,5 +145,3 @@ detached := make([]int, len(original))
 copy(detached, original)
 // Now modifications to detached won't affect original
 ```
-
-Understanding these differences is crucial for writing efficient, correct Go code that properly manages memory and avoids unexpected side effects.
