@@ -136,3 +136,6 @@ Channels enable communication between goroutines (synchronized message passing).
 - **Maps:** Key-value lookups (dictionaries).
 - **Functions:** Callbacks, middleware, stateful closures.
 - **Channels:** Goroutine communication (Go's concurrency model).
+
+# Interfaces, Type Aliases, and Defined Types in Go
+
