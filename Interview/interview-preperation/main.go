@@ -7,5 +7,6 @@ func main() {
 	//question1.PrintSlice()
 	//requestresponse.PrintHello()
 	//requestresponse.PrintPathVar()
-	requestresponse.PrintQueryParam()
+	//requestresponse.PrintQueryParam()
+	requestresponse.PrintMatrixParam()
 }
