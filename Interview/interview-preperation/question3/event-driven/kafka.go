@@ -14,7 +14,7 @@ func RunKafka() {
 	// data - message
 
 	//producer
-	producer, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": "localhost:8080"})
+	producer, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": "localhost"})
 
 	if err != nil {
 		log.Fatal(err)
@@ -35,7 +35,7 @@ func RunKafka() {
 	//consumer
 
 	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers": "localhost:8080",
+		"bootstrap.servers": "localhost",
 		"group.id":          "test-group",
 		"auto.offset.reset": "earliest",
 	})

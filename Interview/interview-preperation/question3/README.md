@@ -11,3 +11,5 @@
 | RESTful Hierarchy | `/users/42/orders`                  | Parent-child resource relations |
 
 - Event Driven APIs
+brew services start kafka --> to start the kafka
+brew services stop kafka --> to stop the kafka
