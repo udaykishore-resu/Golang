@@ -1,6 +1,6 @@
 package main
 
-import requestresponse "interview-preperation/question3/request-response"
+import eventdriven "interview-preperation/question3/event-driven"
 
 func main() {
 	//question1.PrintArray()
@@ -9,5 +9,6 @@ func main() {
 	//requestresponse.PrintPathVar()
 	//requestresponse.PrintQueryParam()
 	//requestresponse.PrintMatrixParam()
-	requestresponse.PrintSubdomain()
+	//requestresponse.PrintSubdomain()
+	eventdriven.RunKafka()
 }
