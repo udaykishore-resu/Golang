@@ -6,12 +6,12 @@ import (
 )
 
 func greetingHandler(resp http.ResponseWriter, req *http.Request) {
-	userID := req.PathValue("user")
+	userID := req.PathValue("id")
 	fmt.Fprintf(resp, "Hello : %s", userID)
 }
 
 func PrintPathVar() {
-	http.HandleFunc("/greetings/{user}", greetingHandler)
+	http.HandleFunc("/users/{id}", greetingHandler)
 	fmt.Println("server is running on http://localhost:8080")
 	http.ListenAndServe(":8080", nil)
 }

@@ -5,13 +5,14 @@ import (
 	"net/http"
 )
 
-func searchUserHandler(resp http.ResponseWriter, req *http.Request) {
+func searchHandler(resp http.ResponseWriter, req *http.Request) {
 	query := req.URL.Query()
-	name := query.Get("name")
-	age := query.Get("age")
-	fmt.Fprintf(resp, "Search User with Name: %s and Age: %s", name, age)
+	keyword := query.Get("keyword")
+	page := query.Get("page")
+	fmt.Fprintf(resp, "Search with keyword: %s and page: %s", keyword, page)
 }
 func PrintQueryParam() {
-	http.HandleFunc("/search", searchUserHandler)
+	http.HandleFunc("/search", searchHandler)
+	fmt.Println("server running on http://localhost:8080")
 	http.ListenAndServe(":8080", nil)
 }

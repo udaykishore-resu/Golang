@@ -26,5 +26,6 @@ func getSubdomain(resp http.ResponseWriter, req *http.Request) {
 
 func PrintSubdomain() {
 	http.HandleFunc("/", getSubdomain)
+	fmt.Println("server running on http://localhost:8080")
 	http.ListenAndServe(":8080", nil)
 }

@@ -21,6 +21,7 @@ func getProdDetails(resp http.ResponseWriter, req *http.Request) {
 	}
 }
 func PrintMatrixParam() {
-	http.HandleFunc("/prod-details/{path}", getProdDetails)
+	http.HandleFunc("/products/{path}", getProdDetails)
+	fmt.Println("server running on http://localhost:8080")
 	http.ListenAndServe(":8080", nil)
 }
