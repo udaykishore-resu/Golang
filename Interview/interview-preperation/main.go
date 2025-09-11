@@ -8,5 +8,6 @@ func main() {
 	//requestresponse.PrintHello()
 	//requestresponse.PrintPathVar()
 	//requestresponse.PrintQueryParam()
-	requestresponse.PrintMatrixParam()
+	//requestresponse.PrintMatrixParam()
+	requestresponse.PrintSubdomain()
 }
