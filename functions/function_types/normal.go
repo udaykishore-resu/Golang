@@ -9,6 +9,10 @@ func Func_With_NoArgs() {
 	fmt.Println(a, b)
 }
 
-func Func_With_Args(a int, b int) {
+func Func_With_Args(a, b int) {
 	fmt.Println(a, b)
+}
+
+func Func_With_RefArgs(a *int, b *int) {
+	fmt.Println(*a, *b)
 }
