@@ -6,7 +6,7 @@ import (
 
 func ShowChannelsDeadlock() {
 	fmt.Println("ShowChannelsDeadlock entry")
-	ch := make(chan string, 2)
+	ch := make(chan string, 2) //change this buffered channel size to 3 to avoid deadlock
 	var msg string
 
 	ch <- "Srinivas"
