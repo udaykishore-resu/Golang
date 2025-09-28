@@ -2,6 +2,18 @@
 ## Introduction
 Concurrency is one of Go's most powerful features, enabling programs to handle multiple tasks simultaneously. Unlike traditional threading models, Go uses goroutines - lightweight threads managed by the Go runtime - that make concurrent programming more efficient and accessible.
 
+**goroutine**: It's a independently executing function, launched by a go statement.
+
+It has its own call stack, which grows and shrinks as required.
+
+It's very cheap compare it to OS threads. It's practical to have thousands of goroutines.
+
+It's is not a thread.
+
+There might be one thread in a program with thousands of goroutines.
+
+Instead, goroutines are multiplexed dynamically onto threads as needed to keep all the goroutines running.
+
 ## Starting with the Basics: Automaticity
 Go's concurrency model is built around the concept of automatic scheduling. The Go runtime automatically manages goroutines, multiplexing them onto OS threads. This means you can create thousands of goroutines without the overhead typically associated with OS threads.
 [example](examples/Sequential_execution.go)
@@ -30,3 +42,5 @@ Since goroutines are scheduled by the Go runtime, their execution order is not d
 sync.WaitGroup is used to wait for a collection of goroutines to finish executing.
 
 ### Real-World Example: Web Scraper
+[example](goroutines/examples/web_scraper.go)
+
