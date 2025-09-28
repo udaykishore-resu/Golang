@@ -5,12 +5,13 @@ import (
 	"emp-login-service/config"
 	"fmt"
 	"log"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func ConnectDB(cfg *config.DatabaseConfig) (db *sql.DB, err error) {
 
-	datasource := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
-		cfg.Username, cfg.Password, cfg.Host, cfg.Port, cfg.Schema)
+	datasource := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", cfg.Username, cfg.Password, cfg.Host, cfg.Port, cfg.Schema)
 
 	db, err = sql.Open("mysql", datasource)
 

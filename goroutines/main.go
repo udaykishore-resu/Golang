@@ -12,7 +12,7 @@ func main() {
 	//programs.WorkerPool()
 	//examples.Sequential_execution()
 	//examples.Goroutines_fun()
-	//examples.Goroutines_with_Channel()
+	examples.Goroutines_with_Channel()
 	//examples.Anonymous_Goroutine()
-	examples.WebScraper()
+	//examples.WebScraper()
 }
