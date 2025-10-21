@@ -14,4 +14,5 @@ func boring(msg string) {
 
 func Parent_fun() {
 	go boring("boring!")
+	time.Sleep(time.Second * 10)
 }
