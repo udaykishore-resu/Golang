@@ -25,9 +25,9 @@ Kafka is a **distributed event streaming platform** designed for high-throughput
 #### Architecture
 A Kafka Cluster consists of multiple Brokers (servers). Data is organized into Topics, which are partitioned across the brokers. Zookeeper (or KRaft in newer versions) manages the cluster state.
 
-[Kafka Cluster Architecture](kafka-cluster-architecture.png)
+[Kafka Cluster Architecture](Interview/interview-preperation/question3/event-driven/kafka-cluster-architecture.png)
 
-[Kafka Cluster Detailed Version](kafka-ecosystem.png)
+[Kafka Cluster Detailed Version](Interview/interview-preperation/question3/event-driven/kafka-ecosystem.png)
 
 #### Data Structure
 Data is stored as an ordered, immutable sequence of records called an Event Log. Each record within a partition is assigned a unique, sequential ID called an Offset.
@@ -38,5 +38,5 @@ Data is stored as an ordered, immutable sequence of records called an Event Log.
 3. Consumer belongs to a Consumer Group and uses the Consumer API to pull records from one or more assigned partitions, keeping track of the last processed record's Offset. 
 4. The message remains durable on the broker according to retention policies (e.g., 7 days), allowing new consumers or failed consumers to replay data from any offset.
 
-[Kafka Messages Flow](kafka-messages-flow.png)
+[Kafka Messages Flow](Interview/interview-preperation/question3/event-driven/kafka-messages-flow.png)
 
