@@ -42,3 +42,9 @@ Data is stored as an ordered, immutable sequence of records called an Event Log.
 **Kafka Messages Flow**
 ![Kafka Messages Flow](event-driven/kafka-messages-flow.png)
 
+#### Key Feature
+- **Durability (Messages Saved to Disk)**
+Kafka persists all messages to disk immediately and replicates across multiple brokers, ensuring data survives hardware failures, power outages, and system crashes. Messages are not kept in memory only, they're physically written to disk with configurable replication factors (typically 3x).
+
+- **Replayability**
+Consumers can independently re-read any portion of the message stream by resetting their offset position. This enables:
