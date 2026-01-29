@@ -139,3 +139,4 @@ Channels enable communication between goroutines (synchronized message passing).
 
 # Interfaces, Type Aliases, and Defined Types in Go
 
+## Interfaces

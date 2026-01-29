@@ -229,3 +229,60 @@ const (
 **Output:** <br>
 **Version:** 10203 <br>
 **VersionString:** 1.2.3 <br>
+
+## Variable Shadowing
+Scope determines variable accessibility from `package` to `block` level. Shadowing occurs when **inner scope variables hide outer ones with same names**. Go has __package__, __function__, and __block__ scopes.
+
+**`Package scope:`**
+```go
+package main
+
+import "fmt"
+
+var appName = "Timesheet App"
+
+func main() {
+    fmt.Println(appName) // accessible
+}
+
+func printApp() {
+    fmt.Println(appName) // accessible from another function in the same package
+}
+```
+- A variable, constant, function, type, struct, interface, etc. declared outside of any function but inside a package, has package scope.
+- It is accessible throughout the entire package (all files in the same package).
+- Variables declared at the top level (outside functions) have package scope.
+
+**`Function Scope:`**
+```go
+package main
+
+import "fmt"
+
+func main() {
+    message := "Hello, Go!" // Function scope
+    fmt.Println(message)
+}
+
+func another() {
+    // fmt.Println(message) - error: undefined (message is local to main)
+}
+```
+- Variables declared inside a function are visible only within that function.
+- Function-scoped variables are destroyed after the function finishes execution.
+
+**`Block Scope:`**
+```go
+package main
+
+import "fmt"
+
+func main() {
+    if true {
+        x := 10 // Block scope
+        fmt.Println(x)
+    }
+    // fmt.Println(x) - error: undefined (x only exists inside if block)
+}
+```
+- `Block` means any `{}` enclosed region — could be an if, for, switch, or even an inner block {} inside a function.
